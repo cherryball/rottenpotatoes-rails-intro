@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
   def index
     @hilite_column = ''
     filter_by_ratings = params[:ratings].nil? ? '' : params[:ratings].keys
+    @ratings = params[:ratings] unless params.nil? || params[:ratings].nil?
     @movies = filter_by_ratings.nil?  || filter_by_ratings.empty? ? Movie.all : Movie.where( 'rating'=> filter_by_ratings )
     if params[:sort_by_column] == 'title'
       @movies = Movie.order('title asc')
