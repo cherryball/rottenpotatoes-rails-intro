@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings;
     @ratings = Hash.new
     @all_ratings.each { |r| @ratings[r] = 1 }
+    super
   end
   
   def movie_params
