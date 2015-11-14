@@ -61,6 +61,6 @@ form label {
 }
 
 /* new add */
-css table#movies th.hilite {
+table#movies th.hilite {
   background-color: yellow;
 }
