@@ -30,20 +30,22 @@ class MoviesController < ApplicationController
     @hilite_column = ''
    # filter_by_ratings = params[:ratings].nil? ? session[:ratings] : params[:ratings].keys
     @ratings = params[:ratings].nil? || params[:ratings].empty? ? session[:ratings] : params[:ratings]
-    @ratings = init_ratings if @ratings.nil?
+    @ratings = init_ratings if @ratings.nil? || @ratings.empty?
 
   #  @ratings = params[:ratings].nil?  ? session[:ratings] : params[:ratings]
   #  @movies = filter_by_ratings.nil?  || filter_by_ratings.empty? ? Movie.all : Movie.where( 'rating'=> filter_by_ratings )
   # @movies = @ratings.nil? || @ratings.empty? ? Movie.all : Movie.where( 'rating'=> @ratings.keys )
     sort_by_column = params[:sort_by_column].nil? || params[:sort_by_column].empty? ? session[:sort_by_column] : params[:sort_by_column]
     if 'title' == sort_by_column
-      @movies = @ratings.nil? || @ratings.empty? ? Movie.order('title asc') : Movie.where( 'rating'=> @ratings.keys ).order('title asc')
+      @movies = @ratings.nil? || @ratings.empty? ? Movie.all.order('title asc') : Movie.where( 'rating'=> @ratings.keys ).order('title asc')
       @hilite_column = 'title_header'
       flash[:notice] = "Sort by Title S:#{session[:ratings]} R:#{@ratings} SC:#{session[:sort_by_column]} -p: #{params[:sort_by_column]}"
     elsif 'release_date' == sort_by_column
-      @movies = @ratings.nil? || @ratings.empty? ? Movie.order('release_date asc') : Movie.where( 'rating'=> @ratings.keys ).order('release_date asc')
+      @movies = @ratings.nil? || @ratings.empty? ? Movie.all.order('release_date asc') : Movie.where( 'rating'=> @ratings.keys ).order('release_date asc')
       @hilite_column = 'release_date_header'
       flash[:notice] = "Sort by Release Date"
+    else
+      @movies = @ratings.nil? || @ratings.empty? ? Movie.all : Movie.where( 'rating'=> @ratings.keys )
     end
     session[:sort_by_column] = params[:sort_by_column] unless params[:sort_by_column].nil?
     session[:ratings] = @ratings
