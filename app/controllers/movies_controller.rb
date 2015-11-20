@@ -39,7 +39,8 @@ class MoviesController < ApplicationController
     if 'title' == sort_by_column
       @movies = @ratings.nil? || @ratings.empty? ? Movie.all.order('title asc') : Movie.where( 'rating'=> @ratings.keys ).order('title asc')
       @hilite_column = 'title_header'
-      flash[:notice] = "Sort by Title S:#{session[:ratings]} R:#{@ratings} SC:#{session[:sort_by_column]} -p: #{params[:sort_by_column]}"
+    #  flash[:notice] = "Sort by Title S:#{session[:ratings]} R:#{@ratings} SC:#{session[:sort_by_column]} -p: #{params[:sort_by_column]}"
+      flash[:notice] = "Sort by Title"  
     elsif 'release_date' == sort_by_column
       @movies = @ratings.nil? || @ratings.empty? ? Movie.all.order('release_date asc') : Movie.where( 'rating'=> @ratings.keys ).order('release_date asc')
       @hilite_column = 'release_date_header'
